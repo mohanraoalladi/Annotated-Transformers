@@ -5,3 +5,24 @@ pip install -r requirements.txt
 python -m spacy download de_core_news_sm
 python -m spacy download en_core_web_sm
 python main.py
+
+
+
+git init
+git add .
+git commit -m "Initial commit - Modular Transformer implementation"
+
+git branch -M main
+git remote add origin https://github.com/mohanraoalladi/Annotated-Transformers.git
+
+git pull origin main --allow-unrelated-histories
+
+git push -u origin main
+git push -u origin main --force
+
+
+
+git add .
+git commit -m "Describe your change here"
+git push
+
