@@ -1,0 +1,92 @@
+# **README.md — Annotated Transformers (Modular Version)**
+
+## **Overview**
+This project is a fully modular, from‑scratch implementation of the **Transformer architecture**, inspired by the “Annotated Transformer” paper and tutorial.  
+The architecture is split into clean, professional components:
+
+- **Attention**  
+- **Feed‑Forward Networks**  
+- **Embeddings**  
+- **Positional Encoding**  
+- **Encoder / Decoder Layers**  
+- **Full Encoder‑Decoder Model**
+
+This modular design makes it easy to understand, extend, and experiment with Transformer internals.
+
+---
+
+## **Project Structure**
+
+```
+model/
+│
+├── attention.py              # Scaled dot‑product + multi‑head attention
+├── feedforward.py            # Positionwise feed‑forward network
+├── embeddings.py             # Token embeddings
+├── positional_encoding.py    # Sinusoidal positional encoding
+├── layers.py                 # EncoderLayer, DecoderLayer, LayerNorm, SublayerConnection
+├── encoder.py                # Encoder stack
+├── decoder.py                # Decoder stack
+├── generator.py              # Final projection to vocabulary logits
+├── transformer.py            # Assembles full Encoder‑Decoder model
+│
+pipeline/
+├── vocab.py                  # Vocabulary building + loading
+├── dataloader.py             # Dataset loading, batching, padding, masks
+├── tokenize.py               # spaCy tokenization helpers
+│
+model/
+├── train.py                  # Training loop, optimizer, scheduler
+├── decode.py                 # Greedy decoding
+├── utils.py                  # Batch class, loss compute, training utilities
+│
+main.py                       # Entry point
+requirements.txt              # Python dependencies
+README.md                     # Project documentation
+```
+
+---
+
+## **Installation & Setup**
+
+Run the following commands in order:
+
+```
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python -m spacy download de_core_news_sm
+python -m spacy download en_core_web_sm
+python main.py
+```
+
+---
+
+## **Training**
+The first run will:
+
+- Download the **Multi30k** dataset  
+- Build German/English vocabularies  
+- Train a Transformer model  
+- Save the final weights to `multi30k_model_final.pt`
+
+Colored logs will show progress across:
+
+- Vocabulary building  
+- Dataloader creation  
+- Epochs  
+- Batch loss  
+- Learning rate  
+- Validation loss  
+- Decoding steps  
+
+---
+
+## **Inference**
+After training, `main.py` automatically:
+
+- Loads the trained model  
+- Runs greedy decoding on a validation sample  
+- Prints the generated translation tokens  
+
+---

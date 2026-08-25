@@ -1,0 +1,11 @@
+torch
+torchvision
+torchaudio
+datasets
+spacy
+altair
+pandas
+numpy
+tqdm
+matplotlib
+sentencepiece
