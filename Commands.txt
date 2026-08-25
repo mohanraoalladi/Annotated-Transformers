@@ -26,3 +26,12 @@ git add .
 git commit -m "Describe your change here"
 git push
 
+
+
+
+git rm -r --cached venv
+git add .gitignore
+git add .
+git commit -m "Fix .gitignore and remove venv from Git tracking"
+git push -u origin main --force
+
