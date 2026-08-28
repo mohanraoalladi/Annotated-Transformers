@@ -1,5 +1,7 @@
 import torch
+import random
 import spacy
+import sacrebleu
 
 from model.utils import Log, Batch
 from model.transformer import make_model
@@ -77,12 +79,13 @@ def main():
     start_symbol = vocab_tgt.get_stoi()["<s>"]
     eos_idx = vocab_tgt.get_stoi()["</s>"]
 
-    # pick any example
-    idx = 10
+    # ⭐ RANDOM EXAMPLE
+    idx = random.randint(0, len(dataset) - 1)
     src_tokens, tgt_tokens = dataset[idx]
 
     print("\n==============================")
-    print("INPUT (German):")
+    print(f"Example index: {idx}")
+    print("\nINPUT (German):")
     print(" ".join(src_tokens))
 
     print("\nGROUND TRUTH (English):")
@@ -110,6 +113,10 @@ def main():
 
     print("\nMODEL OUTPUT (cleaned):")
     print(" ".join(cleaned))
+
+    # ⭐ BLEU SCORE FOR THIS EXAMPLE
+    bleu = sacrebleu.sentence_bleu(" ".join(cleaned), [" ".join(tgt_tokens)])
+    print(f"\nBLEU score for this example: {bleu.score:.2f}")
 
     print("==============================\n")
 

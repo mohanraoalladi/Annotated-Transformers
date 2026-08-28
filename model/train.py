@@ -1,9 +1,12 @@
-# model/train.py
+import torch
+import torch.nn as nn
 
-from model.utils import Log, Batch, TrainState, SimpleLossCompute, DummyOptimizer, DummyScheduler, rate, run_epoch
+from model.utils import (
+    Log, Batch, TrainState, SimpleLossCompute,
+    DummyOptimizer, DummyScheduler, rate, run_epoch
+)
 from model.transformer import make_model
 from pipeline.dataloader import create_dataloaders
-import torch
 from torch.nn import KLDivLoss
 from torch.optim.lr_scheduler import LambdaLR
 
@@ -26,7 +29,6 @@ class LabelSmoothing(torch.nn.Module):
 
 
 def train_worker(gpu, ngpus, vocab_src, vocab_tgt, spacy_de, spacy_en, config, is_distributed=False):
-
     Log.blue(">>> Training worker started")
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
@@ -35,17 +37,33 @@ def train_worker(gpu, ngpus, vocab_src, vocab_tgt, spacy_de, spacy_en, config, i
     model = make_model(len(vocab_src), len(vocab_tgt), N=6).to(device)
     Log.yellow(f"Model parameters: {sum(p.numel() for p in model.parameters())}")
 
-    pad_idx = vocab_tgt["<blank>"]
-    criterion = LabelSmoothing(size=len(vocab_tgt), padding_idx=pad_idx, smoothing=0.1).to(device)
+    pad_idx = vocab_tgt.get_stoi()["<pad>"]
+
+    criterion = LabelSmoothing(
+        size=len(vocab_tgt),
+        padding_idx=pad_idx,
+        smoothing=0.1
+    ).to(device)
 
     train_loader, valid_loader = create_dataloaders(
-        device, vocab_src, vocab_tgt, spacy_de, spacy_en,
-        batch_size=config["batch_size"], max_padding=config["max_padding"],
-        is_distributed=False
+        vocab_src,
+        vocab_tgt,
+        spacy_de,
+        spacy_en,
+        config["batch_size"]
     )
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=config["base_lr"], betas=(0.9, 0.98), eps=1e-9)
-    scheduler = LambdaLR(optimizer, lr_lambda=lambda step: rate(step, 512, 1, config["warmup"]))
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=config["base_lr"],
+        betas=(0.9, 0.98),
+        eps=1e-9
+    )
+
+    scheduler = LambdaLR(
+        optimizer,
+        lr_lambda=lambda step: rate(step, 512, 1, config["warmup"])
+    )
 
     train_state = TrainState()
 
@@ -54,7 +72,7 @@ def train_worker(gpu, ngpus, vocab_src, vocab_tgt, spacy_de, spacy_en, config, i
 
         model.train()
         _, train_state = run_epoch(
-            (Batch(b[0], b[1], pad_idx) for b in train_loader),
+            (Batch(b[0], b[1], pad_idx, device) for b in train_loader),
             model,
             SimpleLossCompute(model.generator, criterion),
             optimizer,
@@ -67,7 +85,7 @@ def train_worker(gpu, ngpus, vocab_src, vocab_tgt, spacy_de, spacy_en, config, i
 
         model.eval()
         sloss, _ = run_epoch(
-            (Batch(b[0], b[1], pad_idx) for b in valid_loader),
+            (Batch(b[0], b[1], pad_idx, device) for b in valid_loader),
             model,
             SimpleLossCompute(model.generator, criterion),
             DummyOptimizer(),

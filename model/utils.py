@@ -1,5 +1,7 @@
 # model/utils.py
 
+import torch
+
 # ===== Colored Logging =====
 class Log:
     RED = "\033[91m"
@@ -25,21 +27,29 @@ class Log:
         print(f"{Log.BLUE}{msg}{Log.END}")
 
 
-import torch
-
 class Batch:
-    def __init__(self, src, tgt, pad=2):
+    def __init__(self, src, tgt, pad=2, device=None):
+        if device is None:
+            device = torch.device("cpu")
+
+        # move tensors to the chosen device (CPU/MPS)
+        src = src.to(device)
+        tgt = tgt.to(device)
+
         self.src = src
         self.tgt = tgt
-        self.src_mask = (src != pad).unsqueeze(-2)
-        self.tgt_mask = self.make_std_mask(tgt, pad)
-        self.ntokens = (tgt != pad).sum()
+        self.src_mask = (src != pad).unsqueeze(-2).to(device)
+        self.tgt_mask = self.make_std_mask(tgt, pad).to(device)
+        self.ntokens = (tgt != pad).sum().to(device)
 
     @staticmethod
     def make_std_mask(tgt, pad):
         tgt_mask = (tgt != pad).unsqueeze(-2)
         size = tgt.size(-1)
-        subsequent_mask = torch.triu(torch.ones(1, size, size), diagonal=1).type_as(tgt_mask) == 0
+        subsequent_mask = torch.triu(
+            torch.ones(1, size, size, device=tgt.device),
+            diagonal=1
+        ) == 0
         return tgt_mask & subsequent_mask
 
 
@@ -63,7 +73,8 @@ class DummyScheduler:
 def rate(step, model_size, factor, warmup):
     if step == 0:
         step = 1
-    return factor * (model_size ** (-0.5) * min(step ** (-0.5), step * warmup ** (-1.5)))
+    return factor * (model_size ** (-0.5) *
+                     min(step ** (-0.5), step * warmup ** (-1.5)))
 
 
 def run_epoch(data_iter, model, loss_compute, optimizer, scheduler,

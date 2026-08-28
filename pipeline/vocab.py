@@ -9,7 +9,7 @@ from .tokenize import tokenize
 
 
 class Vocab:
-    def __init__(self, stoi, itos, default_idx=3):
+    def __init__(self, stoi, itos, default_idx=0):
         self.stoi = stoi
         self.itos = itos
         self.default_idx = default_idx
@@ -45,14 +45,17 @@ def build_vocabulary(spacy_de, spacy_en):
             counter_de.update(tokenize_de(ex["de"]))
             counter_en.update(tokenize_en(ex["en"]))
 
-    specials = ["<s>", "</s>", "<blank>", "<unk>"]
+    # FIXED SPECIAL TOKENS
+    specials = ["<unk>", "<pad>", "<s>", "</s>"]
 
+    # German vocab
     stoi_de = {tok: idx for idx, tok in enumerate(specials)}
     for tok, _ in counter_de.most_common():
         if tok not in stoi_de:
             stoi_de[tok] = len(stoi_de)
     itos_de = {idx: tok for tok, idx in stoi_de.items()}
 
+    # English vocab
     stoi_en = {tok: idx for idx, tok in enumerate(specials)}
     for tok, _ in counter_en.most_common():
         if tok not in stoi_en:
