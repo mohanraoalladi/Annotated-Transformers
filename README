@@ -1,29 +1,29 @@
-## 🚀 Annotated Transformers – Full Training Pipeline
+# Annotated Transformers – Full Training Pipeline
 
-A complete, production‑ready Transformer training system inspired by **Annotated Transformer**, featuring:
+A complete, production-ready Transformer training system inspired by Annotated Transformer, featuring:
 
 - Automatic checkpoint saving
 - Automatic resume from latest epoch
 - Clean configuration file
-- Greedy decoding + BLEU scoring
+- Greedy decoding with BLEU scoring
 - Random evaluation samples
-- Multi30k German→English dataset
+- Multi30k German-English dataset
 
 ---
 
-## 📦 Features
+## Features
 
 - Custom Transformer (Encoder + Decoder)
-- spaCy tokenization (German + English)
+- spaCy tokenization (German and English)
 - Vocabulary building
 - Training with checkpointing
-- Auto‑resume from latest checkpoint
+- Auto-resume from latest checkpoint
 - Evaluation with BLEU score
-- Cleaned inference output (removes `<unk>`)
+- Cleaned inference output (removes <unk>)
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Annotated Transformers/
@@ -48,7 +48,7 @@ Annotated Transformers/
 
 ---
 
-## ⚙️ Configuration (`config.py`)
+## Configuration (config.py)
 
 ```python
 config = {
@@ -66,11 +66,11 @@ config = {
 
 ---
 
-## 🏋️ Training (`train_main.py`)
+## Training (train_main.py)
 
 Automatically:
 
-- Loads vocab + spaCy models
+- Loads vocab and spaCy models
 - Builds Transformer
 - Detects latest checkpoint
 - Resumes training or starts fresh
@@ -83,7 +83,7 @@ caffeinate -d python train_main.py
 
 ---
 
-## 🔁 Checkpointing
+## Checkpointing
 
 After every epoch, a checkpoint is saved:
 
@@ -94,11 +94,11 @@ multi30k_model_epoch_2.pt
 multi30k_model_final.pt
 ```
 
-The system automatically resumes from the **highest epoch**.
+The system automatically resumes from the highest epoch.
 
 ---
 
-## 📊 Evaluation (`evaluate.py`)
+## Evaluation (evaluate.py)
 
 Shows:
 
@@ -116,7 +116,7 @@ caffeinate -d python evaluate.py
 
 ---
 
-## 📈 BLEU Scoring
+## BLEU Scoring
 
 Install:
 
@@ -126,13 +126,13 @@ pip install sacrebleu
 
 ---
 
-## 🧠 Inference
+## Inference
 
 Greedy decoding:
 
 - Predicts next token using argmax
 - Stops at EOS
-- Removes `<unk>` tokens
+- Removes <unk> tokens
 
 Example output:
 
@@ -142,17 +142,17 @@ Example output:
 
 ---
 
-## 🔮 Future Improvements
+## Future Improvements
 
 - Beam search decoding
 - BPE tokenization
 - Larger Transformer model
-- Corpus‑level BLEU scoring
+- Corpus-level BLEU scoring
 - TensorBoard training dashboard
 
 ---
 
-## 🧩 Commands Summary
+## Commands Summary
 
 ### Train
 
@@ -176,9 +176,9 @@ python -m spacy download en_core_web_sm
 
 ---
 
-## 📌 Final Notes
+## Final Notes
 
-This README documents your **latest upgraded Transformer pipeline** with:
+This README documents your latest upgraded Transformer pipeline with:
 
 - Automatic resume
 - Checkpoint saving
@@ -186,4 +186,4 @@ This README documents your **latest upgraded Transformer pipeline** with:
 - Clean config separation
 - Random evaluation samples
 
-Your system is now fully production‑ready and easy to extend.
+Your system is now production-ready and easy to extend.
