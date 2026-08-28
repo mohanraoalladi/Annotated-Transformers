@@ -1,5 +1,10 @@
 # 🚀 Annotated Transformers – Full Training Pipeline
 
+![Status](https://img.shields.io/badge/Status-Active-brightgreen)
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![PyTorch](https://img.shields.io/badge/PyTorch-Transformer-orange)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
 A complete, production‑ready Transformer training system inspired by **Annotated Transformer**, featuring:
 
 - Automatic checkpoint saving  
