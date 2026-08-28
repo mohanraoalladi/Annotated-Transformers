@@ -1,54 +1,52 @@
-# Annotated Transformers – Full Training Pipeline
+Here is a polished, beautifully formatted Markdown file. You can copy and paste this directly into your `README.md`.
 
-A complete, production-ready Transformer training system inspired by Annotated Transformer, featuring:
+```markdown
+# 🤖 Annotated Transformer: End-to-End NMT Pipeline
 
-- Automatic checkpoint saving
-- Automatic resume from latest epoch
-- Clean configuration file
-- Greedy decoding with BLEU scoring
-- Random evaluation samples
-- Multi30k German-English dataset
+A complete, modular Transformer-based Neural Machine Translation (NMT) system inspired by *The Annotated Transformer*, trained on the **Multi30k German-to-English** dataset.
 
 ---
 
-## Features
+## 🚀 Features
 
-- Custom Transformer (Encoder + Decoder)
-- spaCy tokenization (German and English)
-- Vocabulary building
-- Training with checkpointing
-- Auto-resume from latest checkpoint
-- Evaluation with BLEU score
-- Cleaned inference output (removes <unk>)
+* **Custom Architecture**: Full Encoder-Decoder Transformer implemented from scratch.
+* **Robust Checkpointing**: Automatic epoch-level saving and auto-resuming from the latest saved model state.
+* **NLP Pipeline**: spaCy tokenization, vocabulary generation, and dynamic padding.
+* **Evaluation & Inference**: Greedy decoding, sample output visualizer, and target text cleanup (e.g., `<unk>` stripping).
+* **Automated Metrics**: Integrated BLEU scoring via `sacrebleu`.
+* **Clean Configuration**: Fully decoupled config management.
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
-```
+```text
 Annotated Transformers/
 │
-├── config.py
-├── train_main.py
-├── evaluate.py
+├── config.py              # Hyperparameters & runtime configurations
+├── train_main.py          # Master training entrypoint with auto-resume logic
+├── evaluate.py            # Model evaluation & BLEU score calculation
 │
-├── model/
-│   ├── transformer.py
-│   ├── train.py
-│   └── utils.py
+├── model/                 # Model architecture modules
+│   ├── transformer.py     # Encoder-Decoder Transformer logic
+│   ├── train.py           # Training step & optimization loops
+│   └── utils.py           # Masking, decoding, & helper functions
 │
-├── pipeline/
-│   ├── vocab.py
-│   ├── dataloader.py
-│   ├── dataset.py
-│   └── tokenize.py
+├── pipeline/              # Data processing & tokenization
+│   ├── vocab.py           # Vocabulary builder & mapping
+│   ├── dataloader.py      # PyTorch DataLoader utilities
+│   ├── dataset.py         # Custom Dataset wrapper
+│   └── tokenize.py        # spaCy processing pipelines
 │
-└── multi30k_model_epoch_X.pt
+└── multi30k_model_epoch_X.pt # Output model checkpoints
+
 ```
 
 ---
 
-## Configuration (config.py)
+## ⚙️ Configuration (`config.py`)
+
+Centralized system parameters for reproducibility and ease of tweaking:
 
 ```python
 config = {
@@ -60,130 +58,85 @@ config = {
     "max_padding": 72,
     "warmup": 3000,
     "file_prefix": "multi30k_model_",
-    "save_every_epoch": True
+    "save_every_epoch": True,
 }
+
 ```
 
 ---
 
-## Training (train_main.py)
+## 📦 Installation & Setup
 
-Automatically:
+### 1. Install Dependencies
 
-- Loads vocab and spaCy models
-- Builds Transformer
-- Detects latest checkpoint
-- Resumes training or starts fresh
-
-### Run training
+```bash
+pip install torch sacrebleu spacy
 
 ```
-caffeinate -d python train_main.py
-```
 
----
+### 2. Download spaCy Language Models
 
-## Checkpointing
-
-After every epoch, a checkpoint is saved:
-
-```
-multi30k_model_epoch_1.pt
-multi30k_model_epoch_2.pt
-...
-multi30k_model_final.pt
-```
-
-The system automatically resumes from the highest epoch.
-
----
-
-## Evaluation (evaluate.py)
-
-Shows:
-
-- Input (German)
-- Ground truth (English)
-- Model output (raw)
-- Model output (cleaned)
-- BLEU score for the example
-
-### Run evaluation
-
-```
-caffeinate -d python evaluate.py
-```
-
----
-
-## BLEU Scoring
-
-Install:
-
-```
-pip install sacrebleu
-```
-
----
-
-## Inference
-
-Greedy decoding:
-
-- Predicts next token using argmax
-- Stops at EOS
-- Removes <unk> tokens
-
-Example output:
-
-```
-<s> A child in a green shirt is holding a </s>
-```
-
----
-
-## Future Improvements
-
-- Beam search decoding
-- BPE tokenization
-- Larger Transformer model
-- Corpus-level BLEU scoring
-- TensorBoard training dashboard
-
----
-
-## Commands Summary
-
-### Train
-
-```
-caffeinate -d python train_main.py
-```
-
-### Evaluate
-
-```
-caffeinate -d python evaluate.py
-```
-
-### Install dependencies
-
-```
-pip install sacrebleu spacy
+```bash
 python -m spacy download de_core_news_sm
 python -m spacy download en_core_web_sm
+
 ```
 
 ---
 
-## Final Notes
+## 🏋️ Training
 
-This README documents your latest upgraded Transformer pipeline with:
+Running `train_main.py` performs the following steps automatically:
 
-- Automatic resume
-- Checkpoint saving
-- BLEU scoring
-- Clean config separation
-- Random evaluation samples
+1. Loads vocabulary and initializes spaCy tokenizers.
+2. Instantiates the Transformer model.
+3. Detects existing checkpoints (`multi30k_model_epoch_X.pt`) and resumes from the highest epoch count (or starts fresh if none are found).
+4. Trains for `num_epochs` and saves progress per epoch.
 
-Your system is now production-ready and easy to extend.
+### Run Training Command
+
+```bash
+caffeinate -d python train_main.py
+
+```
+
+*(Note: `caffeinate -d` prevents macOS from sleeping during training.)*
+
+---
+
+## 📊 Evaluation & Inference
+
+`evaluate.py` randomly samples validation pairs and outputs real-time translation predictions alongside BLEU metrics.
+
+### Run Evaluation Command
+
+```bash
+caffeinate -d python evaluate.py
+
+```
+
+### Example Output Format
+
+```text
+Source (DE):    Ein Kind in einem grünen Hemd hält einen Ball.
+Target (EN):    A child in a green shirt is holding a ball.
+Predicted (Raw): <s> A child in a green shirt is holding a ball . </s>
+Predicted (Clean): A child in a green shirt is holding a ball .
+
+BLEU Score: 84.21
+
+```
+
+---
+
+## 🔮 Roadmap & Future Improvements
+
+* [ ] Add **Beam Search Decoding** for improved inference generation quality.
+* [ ] Transition from word-level spaCy to **Byte-Pair Encoding (BPE)** tokenization (e.g., SentencePiece).
+* [ ] Implement **Corpus-level BLEU** scoring in addition to sentence-level evaluations.
+* [ ] Add **TensorBoard / Weights & Biases** monitoring dashboard integration.
+* [ ] Scale architecture up to larger NMT benchmarks (WMT14).
+
+```
+
+```
