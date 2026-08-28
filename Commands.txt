@@ -26,7 +26,7 @@ git push -u origin main --force
 
 
 git add .
-git commit -m "Describe your change here"
+git commit -m "updated logic to train for save after each epoch"
 git push
 
 
