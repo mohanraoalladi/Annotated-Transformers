@@ -1,3 +1,4 @@
+
 ---
 
 # 🚀 Annotated Transformers – Full Training Pipeline
@@ -20,13 +21,13 @@ A complete, production‑ready Transformer training system inspired by **Annotat
 
 ## 📦 Features
 
-- Custom Transformer (Encoder + Decoder)
-- spaCy tokenization (German + English)
-- Vocabulary building
-- Training with checkpointing
-- Auto‑resume from latest checkpoint
-- Evaluation with BLEU score
-- Cleaned inference output (removes `<unk>`)
+- Custom Transformer (Encoder + Decoder)  
+- spaCy tokenization (German + English)  
+- Vocabulary building  
+- Training with checkpointing  
+- Auto‑resume from latest checkpoint  
+- Evaluation with BLEU score  
+- Cleaned inference output (removes `<unk>`)  
 
 ---
 
