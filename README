@@ -1,38 +1,189 @@
-# 🤖 Annotated Transformer: End-to-End NMT Pipeline
+# Annotated Transformers – Full Training Pipeline
 
-A complete, production-ready Transformer-based Neural Machine Translation (NMT) system inspired by *The Annotated Transformer*, trained on the **Multi30k German-to-English** dataset.
+A complete, production-ready Transformer training system inspired by Annotated Transformer, featuring:
 
----
-
-## 🚀 Features
-
-* **Custom Architecture**: Full Encoder-Decoder Transformer implemented from scratch.
-* **Robust Checkpointing**: Automatic epoch-level saving and auto-resuming from the latest saved model state.
-* **NLP Pipeline**: spaCy tokenization, vocabulary generation, and dynamic padding.
-* **Evaluation & Inference**: Greedy decoding, sample output visualizer, and target text cleanup (strips `<unk>` and special tokens).
-* **Automated Metrics**: Integrated BLEU scoring via `sacrebleu`.
-* **Clean Configuration**: Fully decoupled config management.
+- Automatic checkpoint saving
+- Automatic resume from latest epoch
+- Clean configuration file
+- Greedy decoding with BLEU scoring
+- Random evaluation samples
+- Multi30k German-English dataset
 
 ---
 
-## 📁 Project Structure
+## Features
 
-```text
+- Custom Transformer (Encoder + Decoder)
+- spaCy tokenization (German and English)
+- Vocabulary building
+- Training with checkpointing
+- Auto-resume from latest checkpoint
+- Evaluation with BLEU score
+- Cleaned inference output (removes <unk>)
+
+---
+
+## Project Structure
+
+```
 Annotated Transformers/
 │
-├── config.py              # Hyperparameters & runtime configurations
-├── train_main.py          # Master training entrypoint with auto-resume logic
-├── evaluate.py            # Model evaluation & BLEU score calculation
+├── config.py
+├── train_main.py
+├── evaluate.py
 │
-├── model/                 # Model architecture modules
-│   ├── transformer.py     # Encoder-Decoder Transformer logic
-│   ├── train.py           # Training step & optimization loops
-│   └── utils.py           # Masking, decoding, & helper functions
+├── model/
+│   ├── transformer.py
+│   ├── train.py
+│   └── utils.py
 │
-├── pipeline/              # Data processing & tokenization
-│   ├── vocab.py           # Vocabulary builder & mapping
-│   ├── dataloader.py      # PyTorch DataLoader utilities
-│   ├── dataset.py         # Custom Dataset wrapper
-│   └── tokenize.py        # spaCy processing pipelines
+├── pipeline/
+│   ├── vocab.py
+│   ├── dataloader.py
+│   ├── dataset.py
+│   └── tokenize.py
 │
-└── multi30k_model_epoch_X.pt # Output model checkpoints
+└── multi30k_model_epoch_X.pt
+```
+
+---
+
+## Configuration (config.py)
+
+```python
+config = {
+    "batch_size": 32,
+    "distributed": False,
+    "num_epochs": 20,
+    "accum_iter": 10,
+    "base_lr": 1.0,
+    "max_padding": 72,
+    "warmup": 3000,
+    "file_prefix": "multi30k_model_",
+    "save_every_epoch": True
+}
+```
+
+---
+
+## Training (train_main.py)
+
+Automatically:
+
+- Loads vocab and spaCy models
+- Builds Transformer
+- Detects latest checkpoint
+- Resumes training or starts fresh
+
+### Run training
+
+```
+caffeinate -d python train_main.py
+```
+
+---
+
+## Checkpointing
+
+After every epoch, a checkpoint is saved:
+
+```
+multi30k_model_epoch_1.pt
+multi30k_model_epoch_2.pt
+...
+multi30k_model_final.pt
+```
+
+The system automatically resumes from the highest epoch.
+
+---
+
+## Evaluation (evaluate.py)
+
+Shows:
+
+- Input (German)
+- Ground truth (English)
+- Model output (raw)
+- Model output (cleaned)
+- BLEU score for the example
+
+### Run evaluation
+
+```
+caffeinate -d python evaluate.py
+```
+
+---
+
+## BLEU Scoring
+
+Install:
+
+```
+pip install sacrebleu
+```
+
+---
+
+## Inference
+
+Greedy decoding:
+
+- Predicts next token using argmax
+- Stops at EOS
+- Removes <unk> tokens
+
+Example output:
+
+```
+<s> A child in a green shirt is holding a </s>
+```
+
+---
+
+## Future Improvements
+
+- Beam search decoding
+- BPE tokenization
+- Larger Transformer model
+- Corpus-level BLEU scoring
+- TensorBoard training dashboard
+
+---
+
+## Commands Summary
+
+### Train
+
+```
+caffeinate -d python train_main.py
+```
+
+### Evaluate
+
+```
+caffeinate -d python evaluate.py
+```
+
+### Install dependencies
+
+```
+pip install sacrebleu spacy
+python -m spacy download de_core_news_sm
+python -m spacy download en_core_web_sm
+```
+
+---
+
+## Final Notes
+
+This README documents your latest upgraded Transformer pipeline with:
+
+- Automatic resume
+- Checkpoint saving
+- BLEU scoring
+- Clean config separation
+- Random evaluation samples
+
+Your system is now production-ready and easy to extend.
