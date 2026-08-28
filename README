@@ -1,6 +1,3 @@
-Here is a polished, beautifully formatted Markdown file. You can copy and paste this directly into your `README.md`.
-
-```markdown
 # 🤖 Annotated Transformer: End-to-End NMT Pipeline
 
 A complete, modular Transformer-based Neural Machine Translation (NMT) system inspired by *The Annotated Transformer*, trained on the **Multi30k German-to-English** dataset.
@@ -136,7 +133,3 @@ BLEU Score: 84.21
 * [ ] Implement **Corpus-level BLEU** scoring in addition to sentence-level evaluations.
 * [ ] Add **TensorBoard / Weights & Biases** monitoring dashboard integration.
 * [ ] Scale architecture up to larger NMT benchmarks (WMT14).
-
-```
-
-```
