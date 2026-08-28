@@ -1,9 +1,11 @@
+---
+
 # 🚀 Annotated Transformers – Full Training Pipeline
 
-![Status](https://img.shields.io/badge/Status-Active-brightgreen)
-![Python](https://img.shields.io/badge/Python-3.10+-blue)
-![PyTorch](https://img.shields.io/badge/PyTorch-Transformer-orange)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
+`https://img.shields.io/badge/Status-Active-brightgreen`
+`https://img.shields.io/badge/Python-3.10+-blue`
+`https://img.shields.io/badge/PyTorch-Transformer-orange`
+`https://img.shields.io/badge/License-MIT-lightgrey`
 
 A complete, production‑ready Transformer training system inspired by **Annotated Transformer**, featuring:
 
@@ -54,8 +56,6 @@ Annotated Transformers/
 ---
 
 ## ⚙️ Configuration (`config.py`)
-
-All hyperparameters are stored in one clean file:
 
 ```python
 config = {
@@ -125,8 +125,6 @@ caffeinate -d python evaluate.py
 
 ## 📈 BLEU Scoring
 
-Uses `sacrebleu` for sentence‑level BLEU.
-
 Install:
 
 ```
@@ -154,10 +152,10 @@ Example output:
 ## 🔮 Future Improvements
 
 - Beam search decoding  
-- BPE tokenization (removes `<unk>`)  
+- BPE tokenization  
 - Larger Transformer model  
 - Corpus‑level BLEU scoring  
-- Training dashboard (TensorBoard)  
+- TensorBoard training dashboard  
 
 ---
 
@@ -197,3 +195,4 @@ This README documents your **latest upgraded Transformer pipeline** with:
 
 Your system is now fully production‑ready and easy to extend.
 
+---
