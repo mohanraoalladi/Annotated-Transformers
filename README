@@ -1,27 +1,35 @@
-# Annotated Transformers – Training Pipeline
+# 🚀 Annotated Transformers – Full Training Pipeline
 
-A complete, production‑ready Transformer training system with:
-- Automatic checkpoint saving
-- Automatic resume from latest checkpoint
-- Separate configuration file
-- Greedy decoding + BLEU scoring
-- Random evaluation samples
+![Status](https://img.shields.io/badge/Status-Active-brightgreen)
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![PyTorch](https://img.shields.io/badge/PyTorch-Transformer-orange)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
+A complete, production‑ready Transformer training system inspired by **Annotated Transformer**, featuring:
+
+- Automatic checkpoint saving  
+- Automatic resume from latest epoch  
+- Clean configuration file  
+- Greedy decoding + BLEU scoring  
+- Random evaluation samples  
+- Multi30k German→English dataset  
 
 ---
 
-## 🚀 Features
-- Full Transformer model (Encoder + Decoder)
-- Multi30k German→English dataset
-- spaCy‑based tokenization
+## 📦 Features
+
+- Custom Transformer (Encoder + Decoder)
+- spaCy tokenization (German + English)
 - Vocabulary building
 - Training with checkpointing
-- Resume training automatically
+- Auto‑resume from latest checkpoint
 - Evaluation with BLEU score
-- Cleaned model output (removes `<unk>`)
+- Cleaned inference output (removes `<unk>`)
 
 ---
 
 ## 📁 Project Structure
+
 ```
 Annotated Transformers/
 │
@@ -46,6 +54,7 @@ Annotated Transformers/
 ---
 
 ## ⚙️ Configuration (`config.py`)
+
 All hyperparameters are stored in one clean file:
 
 ```python
@@ -65,13 +74,16 @@ config = {
 ---
 
 ## 🏋️ Training (`train_main.py`)
+
 Automatically:
-- Loads vocab + spaCy models
-- Builds Transformer
-- Detects latest checkpoint
-- Resumes training or starts fresh
+
+- Loads vocab + spaCy models  
+- Builds Transformer  
+- Detects latest checkpoint  
+- Resumes training or starts fresh  
 
 ### Run training
+
 ```
 caffeinate -d python train_main.py
 ```
@@ -79,6 +91,7 @@ caffeinate -d python train_main.py
 ---
 
 ## 🔁 Checkpointing
+
 After every epoch, a checkpoint is saved:
 
 ```
@@ -93,14 +106,17 @@ The system automatically resumes from the **highest epoch**.
 ---
 
 ## 📊 Evaluation (`evaluate.py`)
+
 Shows:
-- Input (German)
-- Ground truth (English)
-- Model output (raw)
-- Model output (cleaned)
-- BLEU score for the example
+
+- Input (German)  
+- Ground truth (English)  
+- Model output (raw)  
+- Model output (cleaned)  
+- BLEU score for the example  
 
 ### Run evaluation
+
 ```
 caffeinate -d python evaluate.py
 ```
@@ -108,9 +124,11 @@ caffeinate -d python evaluate.py
 ---
 
 ## 📈 BLEU Scoring
+
 Uses `sacrebleu` for sentence‑level BLEU.
 
 Install:
+
 ```
 pip install sacrebleu
 ```
@@ -118,12 +136,15 @@ pip install sacrebleu
 ---
 
 ## 🧠 Inference
+
 Greedy decoding:
-- Predicts next token using argmax
-- Stops at EOS
-- Removes `<unk>` tokens
+
+- Predicts next token using argmax  
+- Stops at EOS  
+- Removes `<unk>` tokens  
 
 Example output:
+
 ```
 <s> A child in a green shirt is holding a </s>
 ```
@@ -131,25 +152,31 @@ Example output:
 ---
 
 ## 🔮 Future Improvements
-- Beam search decoding
-- BPE tokenization (removes `<unk>`)
-- Larger Transformer model
-- Corpus‑level BLEU
+
+- Beam search decoding  
+- BPE tokenization (removes `<unk>`)  
+- Larger Transformer model  
+- Corpus‑level BLEU scoring  
+- Training dashboard (TensorBoard)  
 
 ---
 
 ## 🧩 Commands Summary
+
 ### Train
+
 ```
 caffeinate -d python train_main.py
 ```
 
 ### Evaluate
+
 ```
 caffeinate -d python evaluate.py
 ```
 
 ### Install dependencies
+
 ```
 pip install sacrebleu spacy
 python -m spacy download de_core_news_sm
@@ -159,11 +186,14 @@ python -m spacy download en_core_web_sm
 ---
 
 ## 📌 Final Notes
+
 This README documents your **latest upgraded Transformer pipeline** with:
-- Automatic resume
-- Checkpoint saving
-- BLEU scoring
-- Clean config separation
-- Random evaluation samples
+
+- Automatic resume  
+- Checkpoint saving  
+- BLEU scoring  
+- Clean config separation  
+- Random evaluation samples  
 
 Your system is now fully production‑ready and easy to extend.
+
