@@ -7,24 +7,24 @@
 
 A complete, production‑ready Transformer training system inspired by **Annotated Transformer**, featuring:
 
-- Automatic checkpoint saving  
-- Automatic resume from latest epoch  
-- Clean configuration file  
-- Greedy decoding + BLEU scoring  
-- Random evaluation samples  
-- Multi30k German→English dataset  
+- Automatic checkpoint saving
+- Automatic resume from latest epoch
+- Clean configuration file
+- Greedy decoding + BLEU scoring
+- Random evaluation samples
+- Multi30k German→English dataset
 
 ---
 
 ## 📦 Features
 
-- Custom Transformer (Encoder + Decoder)  
-- spaCy tokenization (German + English)  
-- Vocabulary building  
-- Training with checkpointing  
-- Auto‑resume from latest checkpoint  
-- Evaluation with BLEU score  
-- Cleaned inference output (removes `<unk>`)  
+- Custom Transformer (Encoder + Decoder)
+- spaCy tokenization (German + English)
+- Vocabulary building
+- Training with checkpointing
+- Auto‑resume from latest checkpoint
+- Evaluation with BLEU score
+- Cleaned inference output (removes `<unk>`)
 
 ---
 
@@ -75,10 +75,10 @@ config = {
 
 Automatically:
 
-- Loads vocab + spaCy models  
-- Builds Transformer  
-- Detects latest checkpoint  
-- Resumes training or starts fresh  
+- Loads vocab + spaCy models
+- Builds Transformer
+- Detects latest checkpoint
+- Resumes training or starts fresh
 
 ### Run training
 
@@ -107,11 +107,11 @@ The system automatically resumes from the **highest epoch**.
 
 Shows:
 
-- Input (German)  
-- Ground truth (English)  
-- Model output (raw)  
-- Model output (cleaned)  
-- BLEU score for the example  
+- Input (German)
+- Ground truth (English)
+- Model output (raw)
+- Model output (cleaned)
+- BLEU score for the example
 
 ### Run evaluation
 
@@ -135,9 +135,9 @@ pip install sacrebleu
 
 Greedy decoding:
 
-- Predicts next token using argmax  
-- Stops at EOS  
-- Removes `<unk>` tokens  
+- Predicts next token using argmax
+- Stops at EOS
+- Removes `<unk>` tokens
 
 Example output:
 
@@ -149,11 +149,11 @@ Example output:
 
 ## 🔮 Future Improvements
 
-- Beam search decoding  
-- BPE tokenization  
-- Larger Transformer model  
-- Corpus‑level BLEU scoring  
-- TensorBoard training dashboard  
+- Beam search decoding
+- BPE tokenization
+- Larger Transformer model
+- Corpus‑level BLEU scoring
+- TensorBoard training dashboard
 
 ---
 
@@ -185,10 +185,10 @@ python -m spacy download en_core_web_sm
 
 This README documents your **latest upgraded Transformer pipeline** with:
 
-- Automatic resume  
-- Checkpoint saving  
-- BLEU scoring  
-- Clean config separation  
-- Random evaluation samples  
+- Automatic resume
+- Checkpoint saving
+- BLEU scoring
+- Clean config separation
+- Random evaluation samples
 
 Your system is now fully production‑ready and easy to extend.
